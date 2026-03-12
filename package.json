@@ -1,0 +1,35 @@
+{
+  "name": "@govrider/mcp-server",
+  "version": "1.1.0",
+  "description": "GovRider MCP Server - Match your tech product or consulting service to thousands of live government tenders, RFPs, grants, and frameworks from 25+ official sources worldwide, updated nightly",
+  "type": "module",
+  "bin": {
+    "govrider-mcp": "build/index.js"
+  },
+  "scripts": {
+    "build": "tsc && node -e \"const fs=require('fs');const f='build/index.js';const c=fs.readFileSync(f,'utf8');if(!c.startsWith('#!')){fs.writeFileSync(f,'#!/usr/bin/env node\\n'+c)};fs.chmodSync(f,0o755)\"",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "build"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "govrider",
+    "government",
+    "procurement",
+    "tenders",
+    "grants"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}

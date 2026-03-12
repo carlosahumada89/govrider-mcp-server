@@ -1,0 +1,18 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      GOVRIDER_API_KEY:
+        type: string
+        description: "Your GovRider API key. Get one at https://govrider.ai/app/api-keys"
+    required:
+      - GOVRIDER_API_KEY
+  commandFunction: |-
+    (config) => ({
+      command: 'npx',
+      args: ['-y', '@govrider/mcp-server'],
+      env: {
+        GOVRIDER_API_KEY: config.GOVRIDER_API_KEY
+      }
+    })
