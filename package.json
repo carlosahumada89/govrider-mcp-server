@@ -1,6 +1,6 @@
 {
   "name": "@govrider/mcp-server",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "GovRider MCP Server - Match your tech product or consulting service to thousands of live government tenders, RFPs, grants, and frameworks from 25+ official sources worldwide, updated nightly",
   "type": "module",
   "bin": {

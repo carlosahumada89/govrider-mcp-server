@@ -98,41 +98,17 @@ server.registerTool(
   'search_opportunities',
   {
     description:
-      'Search government procurement opportunities worldwide. Returns sector category, region, funding type, estimated value, deadline, and status for up to 10 matches. FREE - no credits required. Use this for initial discovery before committing credits to enriched search.',
+      'Search government procurement opportunities worldwide. Returns sector category, region, funding type, estimated value, deadline, and status for up to 10 matches. FREE - no credits required. Always searches globally across all sources. Use this for initial discovery before committing credits to enriched search.',
     inputSchema: {
       query: z
         .string()
         .min(10)
         .max(10000)
-        .describe('Description of the technology, product, or service to match against government opportunities (min 10 chars)'),
-      region: z
-        .string()
-        .optional()
-        .describe('Filter by region (e.g. "EU", "US Federal", "UK", "Latin America", "Asia Pacific", "Africa")'),
-      country: z
-        .string()
-        .optional()
-        .describe('Filter by country (e.g. "France", "Colombia", "Australia")'),
-      funding_type: z
-        .string()
-        .optional()
-        .describe('Filter by funding type (e.g. "Tender", "Grant", "RFP", "SBIR/STTR", "Framework")'),
-      limit: z
-        .number()
-        .min(1)
-        .max(10)
-        .optional()
-        .describe('Number of results to return (1-10, default 10)'),
+        .describe('Description of the technology, product, or service to match against government opportunities (min 10 chars). Include any country, region, or sector context directly in the description.'),
     },
   },
-  async ({ query, region, country, funding_type, limit }) => {
+  async ({ query }) => {
     const body: Record<string, unknown> = { query }
-    const filters: Record<string, string> = {}
-    if (region) filters.region = region
-    if (country) filters.country = country
-    if (funding_type) filters.funding_type = funding_type
-    if (Object.keys(filters).length > 0) body.filters = filters
-    if (limit) body.limit = limit
 
     const { ok, status, data } = await apiCall('/api/v1/search', body)
 
@@ -180,34 +156,17 @@ server.registerTool(
   'search_enriched',
   {
     description:
-      'Full AI-powered government procurement search with Claude Sonnet intelligence. Returns a compact ranked summary of 10 matches showing title, match score, region, type, value, and deadline. Costs 1 credit. After reviewing the summary, use **get_opportunity** with a result number (1-10) to see the full strategic fit memo, political context memo, description, and application URL for any match - at no extra cost.',
+      'Full AI-powered government procurement search with Claude Sonnet intelligence. Returns a compact ranked summary of 10 matches showing title, match score, region, type, value, and deadline. Costs 1 credit. Always searches globally across all sources to find the best matches. After reviewing the summary, use **get_opportunity** with a result number (1-10) to see the full strategic fit memo, political context memo, description, and application URL for any match - at no extra cost.',
     inputSchema: {
       query: z
         .string()
         .min(20)
         .max(10000)
-        .describe('Detailed description of the technology, product, or service (min 20 chars). More detail = better matches.'),
-      region: z
-        .string()
-        .optional()
-        .describe('Filter by region (e.g. "EU", "US Federal", "UK", "Latin America", "Asia Pacific", "Africa")'),
-      country: z
-        .string()
-        .optional()
-        .describe('Filter by country (e.g. "France", "Colombia", "Australia")'),
-      funding_type: z
-        .string()
-        .optional()
-        .describe('Filter by funding type (e.g. "Tender", "Grant", "RFP", "SBIR/STTR", "Framework")'),
+        .describe('Detailed description of the technology, product, or service (min 20 chars). Include any country, region, or sector context directly in the description. More detail = better matches.'),
     },
   },
-  async ({ query, region, country, funding_type }) => {
+  async ({ query }) => {
     const body: Record<string, unknown> = { query }
-    const filters: Record<string, string> = {}
-    if (region) filters.region = region
-    if (country) filters.country = country
-    if (funding_type) filters.funding_type = funding_type
-    if (Object.keys(filters).length > 0) body.filters = filters
 
     const { ok, status, data } = await apiCall('/api/v1/search/enriched', body)
 
@@ -246,6 +205,8 @@ server.registerTool(
       ...lines,
       '',
       '---',
+      'These are the most similar opportunities found in GovRider\'s curated database, ranked by AI-assessed alignment to your description. Results may include opportunities from different countries or funding types than specified if closer matches were not available at this time. Database updated nightly from 25+ official government sources.',
+      '',
       `Credits remaining: ${creditsRemaining ?? 'unknown'}`,
       '',
       'Use **get_opportunity** with a number (1-10) to see the full strategic fit memo, political context, description, and application URL for any match above.',
