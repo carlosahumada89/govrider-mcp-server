@@ -13,6 +13,10 @@
   <a href="https://govrider.ai"><img src="https://img.shields.io/badge/govrider.ai-live-39ff14" alt="GovRider"></a>
 </p>
 
+<a href="https://glama.ai/mcp/servers/carlosahumada89/govrider-mcp-server">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/carlosahumada89/govrider-mcp-server/badge" alt="govrider-mcp-server MCP server" />
+</a>
+
 ---
 
 ## What is GovRider?
