@@ -23,6 +23,7 @@
     "tenders",
     "grants"
   ],
+  "mcpName": "io.github.carlosahumada89/govrider-mcp-server",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.0",
