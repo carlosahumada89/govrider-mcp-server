@@ -31,6 +31,10 @@ GovRider is for **any tech company, consultancy, or individual** with a technolo
 
 ---
 
+## Hosted deployment
+
+A hosted deployment is available on [Fronteir AI](https://fronteir.ai/mcp/carlosahumada89-govrider-mcp-server).
+
 ## Quick Start
 
 ### 1. Get an API key
